@@ -208,7 +208,7 @@ function MacLib:Window(Settings)
 	exit.TextColor3 = Color3.fromRGB(0, 0, 0)
 	exit.TextSize = 14
 	exit.AutoButtonColor = false
-	exit.BackgroundColor3 = Color3.fromRGB(250, 93, 86)
+	exit.BackgroundColor3 = Color3.fromRGB(100, 17, 17)
 	exit.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	exit.BorderSizePixel = 0
 
@@ -226,7 +226,7 @@ function MacLib:Window(Settings)
 	minimize.TextColor3 = Color3.fromRGB(0, 0, 0)
 	minimize.TextSize = 14
 	minimize.AutoButtonColor = false
-	minimize.BackgroundColor3 = Color3.fromRGB(252, 190, 57)
+	minimize.BackgroundColor3 = Color3.fromRGB(15, 71, 214)
 	minimize.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	minimize.BorderSizePixel = 0
 	minimize.LayoutOrder = 1
@@ -4642,16 +4642,16 @@ function MacLib:Window(Settings)
 				local selectedConfig = nil
 
 				configSection:Input({
-					Name = "Config Name",
-					Placeholder = "Name",
-					AcceptedCharacters = "All",
+					Name = "Название Конфинга",
+					Placeholder = "Название",
+					AcceptedCharacters = "Все",
 					Callback = function(input)
 						inputPath = input
 					end,
 				})
 
 				local configSelection = configSection:Dropdown({
-					Name = "Select Config",
+					Name = "Выбрать Конфинг",
 					Multi = false,
 					Required = false,
 					Options = MacLib:RefreshConfigList(),
@@ -4661,12 +4661,12 @@ function MacLib:Window(Settings)
 				})
 
 				configSection:Button({
-					Name = "Create Config",
+					Name = "Создать Конфинг",
 					Callback = function()
 						if not inputPath or string.gsub(inputPath, " ", "") == "" then
 							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Config name cannot be empty."
+								Title = "Интерфейс",
+								Description = "Имя Конфинга, не может быть пустым."
 							})
 							return
 						end
@@ -4674,14 +4674,14 @@ function MacLib:Window(Settings)
 						local success, returned = MacLib:SaveConfig(inputPath)
 						if not success then
 							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Unable to save config, return error: " .. returned
+								Title = "Интерфейс",
+								Description = "Не удается сохранить Конфинг, Возврат ошибки: " .. returned
 							})
 						end
 
 						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Created config %q", inputPath),
+							Title = "Интерфейс",
+							Description = string.format("Создать Конфинг %q", inputPath),
 						})
 
 						configSelection:ClearOptions()
@@ -4690,45 +4690,45 @@ function MacLib:Window(Settings)
 				})
 
 				configSection:Button({
-					Name = "Load Config",
+					Name = "Загрузить Конфинг",
 					Callback = function()
 						local success, returned = MacLib:LoadConfig(configSelection.Value)
 						if not success then
 							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Unable to load config, return error: " .. returned
+								Title = "Интерфейс",
+								Description = "Не удается загрузить Конфинг, Возврат ошибки: " .. returned
 							})
 							return
 						end
 
 						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Loaded config %q", configSelection.Value),
+							Title = "Интерфейс",
+							Description = string.format("Загружен Конфинг %q", configSelection.Value),
 						})
 					end,
 				})
 
 				configSection:Button({
-					Name = "Overwrite Config",
+					Name = "Перезаписать Конфинг,
 					Callback = function()
 						local success, returned = MacLib:SaveConfig(configSelection.Value)
 						if not success then
 							WindowFunctions:Notify({
-								Title = "Interface",
-								Description = "Unable to overwrite config, return error: " .. returned
+								Title = "Интерфейс",
+								Description = "Не удается перезаписать Конфинг, Возврат ошибки: " .. returned
 							})
 							return
 						end
 
 						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Overwrote config %q", configSelection.Value),
+							Title = "Интерфейс",
+							Description = string.format("Перезапись Конфинга %q", configSelection.Value),
 						})
 					end,
 				})
 
 				configSection:Button({
-					Name = "Refresh Config List",
+					Name = "Перезагрузить Лист Конфингов",
 					Callback = function()
 						configSelection:ClearOptions()
 						configSelection:InsertOptions(MacLib:RefreshConfigList())
@@ -4738,23 +4738,23 @@ function MacLib:Window(Settings)
 				local autoloadLabel
 
 				configSection:Button({
-					Name = "Set as autoload",
+					Name = "Поставить Авто_Загрузку",
 					Callback = function()
 						local name = configSelection.Value
 						writefile(MacLib.Folder .. "/settings/autoload.txt", name)
-						autoloadLabel:UpdateName("Autoload config: " .. name)
+						autoloadLabel:UpdateName("Авто_Загрузка Конфинга: " .. name)
 						WindowFunctions:Notify({
-							Title = "Interface",
-							Description = string.format("Set %q as autoload", name),
+							Title = "Интерфейс",
+							Description = string.format("Поставить %q Авто_Загрузка", name),
 						})
 					end,
 				})
 
-				autoloadLabel = configSection:Label({Text = "Autoload config: None"})
+				autoloadLabel = configSection:Label({Text = "Авто_Загрузка Конфинга: None"})
 
 				if isfile(MacLib.Folder .. "/settings/autoload.txt") then
 					local name = readfile(MacLib.Folder .. "/settings/autoload.txt")
-					autoloadLabel:UpdateName("Autoload config: " .. name)
+					autoloadLabel:UpdateName("Авто_Загрузка Конфинга: " .. name)
 				end
 			end
 
