@@ -1,18 +1,18 @@
-local MacLib = { 
+local DawLib = { 
 	Options = {}, 
-	Folder = "Maclib", 
+	Folder = "DawLib", 
 	GetService = function(service)
 		return cloneref and cloneref(game:GetService(service)) or game:GetService(service)
 	end
 }
 
-local TweenService = MacLib.GetService("TweenService")
-local RunService = MacLib.GetService("RunService")
-local HttpService = MacLib.GetService("HttpService")
-local ContentProvider = MacLib.GetService("ContentProvider")
-local UserInputService = MacLib.GetService("UserInputService")
-local Lighting = MacLib.GetService("Lighting")
-local Players = MacLib.GetService("Players")
+local TweenService = DawLib.GetService("TweenService")
+local RunService = DawLib.GetService("RunService")
+local HttpService = DawLib.GetService("HttpService")
+local ContentProvider = DawLib.GetService("ContentProvider")
+local UserInputService = DawLib.GetService("UserInputService")
+local Lighting = DawLib.GetService("Lighting")
+local Players = DawLib1.GetService("Players")
 
 local isStudio = RunService:IsStudio()
 local LocalPlayer = Players.LocalPlayer
@@ -53,7 +53,7 @@ local function GetGui()
 	local parent = RunService:IsStudio() 
 		and LocalPlayer:FindFirstChild("PlayerGui")
 		or (gethui and gethui())
-		or (cloneref and cloneref(MacLib.GetService("CoreGui")) or MacLib.GetService("CoreGui"))
+		or (cloneref and cloneref(DawLib.GetService("CoreGui")) or DawLib.GetService("CoreGui"))
 
 	newGui.Parent = parent
 	return newGui
@@ -63,7 +63,7 @@ local function Tween(instance, tweeninfo, propertytable)
 	return TweenService:Create(instance, tweeninfo, propertytable)
 end
 
-function MacLib:Window(Settings)
+function DawLib:Window(Settings)
 	local WindowFunctions = {Settings = Settings}
 	if Settings.AcrylicBlur ~= nil then
 		acrylicBlur = Settings.AcrylicBlur
@@ -71,7 +71,7 @@ function MacLib:Window(Settings)
 		acrylicBlur = true
 	end
 
-	local macLib = GetGui()
+	local DawLib = GetGui()
 
 	local notifications = Instance.new("Frame")
 	notifications.Name = "Notifications"
@@ -80,7 +80,7 @@ function MacLib:Window(Settings)
 	notifications.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	notifications.BorderSizePixel = 0
 	notifications.Size = UDim2.fromScale(1, 1)
-	notifications.Parent = macLib
+	notifications.Parent = DawLib
 	notifications.ZIndex = 2
 
 	local notificationsUIListLayout = Instance.new("UIListLayout")
@@ -554,7 +554,7 @@ function MacLib:Window(Settings)
 	userAndDisplayFrameUIListLayout.Parent = userAndDisplayFrame
 
 	local username = Instance.new("TextLabel")
-	username.Name = "Username"
+	username.Name = "Ваш ник"
 	username.FontFace = Font.new(
 		assets.interFont,
 		Enum.FontWeight.SemiBold,
@@ -919,7 +919,7 @@ function MacLib:Window(Settings)
 	globalSettingsUIScale.Scale = 1e-07
 	globalSettingsUIScale.Parent = globalSettings
 	globalSettings.Parent = base
-	base.Parent = macLib
+	base.Parent = DawLib
 
 	function WindowFunctions:UpdateTitle(NewTitle)
 		title.Text = NewTitle
@@ -1193,7 +1193,7 @@ function MacLib:Window(Settings)
 		hasGlobalSetting = true
 		local GlobalSettingFunctions = {}
 		local globalSetting = Instance.new("TextButton")
-		globalSetting.Name = "GlobalSetting"
+		globalSetting.Name = "Глобальные Настройки"
 		globalSetting.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
 		globalSetting.Text = ""
 		globalSetting.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -1210,7 +1210,7 @@ function MacLib:Window(Settings)
 		globalSettingToggleUIPadding.Parent = globalSetting
 
 		local settingName = Instance.new("TextLabel")
-		settingName.Name = "SettingName"
+		settingName.Name = "Название Настройки"
 		settingName.FontFace = Font.new(assets.interFont)
 		settingName.Text = Settings.Name
 		settingName.RichText = true
@@ -1682,7 +1682,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = ButtonFunctions
+						DawLib.Options[Flag] = ButtonFunctions
 					end
 					return ButtonFunctions
 				end
@@ -1821,7 +1821,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = ToggleFunctions
+						DawLib.Options[Flag] = ToggleFunctions
 					end
 					return ToggleFunctions
 				end
@@ -1874,7 +1874,6 @@ function MacLib:Window(Settings)
 					sliderValue.TextColor3 = Color3.fromRGB(255, 255, 255)
 					sliderValue.TextSize = 12
 					sliderValue.TextTransparency = 0.1
-					--sliderValue.TextTruncate = Enum.TextTruncate.AtEnd
 					sliderValue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 					sliderValue.BackgroundTransparency = 0.95
 					sliderValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1948,10 +1947,10 @@ function MacLib:Window(Settings)
 					local dragging = false
 
 					local DisplayMethods = {
-						Hundredths = function(sliderValue) -- Deprecated use Settings.Precision
+						Hundredths = function(sliderValue)
 							return string.format("%.2f", sliderValue)
 						end,
-						Tenths = function(sliderValue) -- Deprecated use Settings.Precision
+						Tenths = function(sliderValue)
 							return string.format("%.1f", sliderValue)
 						end,
 						Round = function(sliderValue, precision)
@@ -2082,7 +2081,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = SliderFunctions
+						DawLib.Options[Flag] = SliderFunctions
 					end
 					return SliderFunctions
 				end
@@ -2122,7 +2121,7 @@ function MacLib:Window(Settings)
 					local inputBox = Instance.new("TextBox")
 					inputBox.Name = "InputBox"
 					inputBox.FontFace = Font.new(assets.interFont)
-					inputBox.Text = "Hello world!"
+					inputBox.Text = "Nothing!"
 					inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 					inputBox.TextSize = 12
 					inputBox.TextTransparency = 0.1
@@ -2258,15 +2257,15 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = InputFunctions
+						DawLib.Options[Flag] = InputFunctions
 					end
 					return InputFunctions
 				end
 
 				function SectionFunctions:Keybind(Settings, Flag)
-					local KeybindFunctions = { Settings = Settings, IgnoreConfig = false, Class = "Keybind" }
+					local KeybindFunctions = { Settings = Settings, IgnoreConfig = false, Class = "Кнопка" }
 					local keybind = Instance.new("Frame")
-					keybind.Name = "Keybind"
+					keybind.Name = "Кнопка"
 					keybind.AutomaticSize = Enum.AutomaticSize.Y
 					keybind.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 					keybind.BackgroundTransparency = 1
@@ -2276,7 +2275,7 @@ function MacLib:Window(Settings)
 					keybind.Parent = section
 
 					local keybindName = Instance.new("TextLabel")
-					keybindName.Name = "KeybindName"
+					keybindName.Name = "Название Кнопки"
 					keybindName.FontFace = Font.new(assets.interFont)
 					keybindName.Text = KeybindFunctions.Settings.Name
 					keybindName.RichText = true
@@ -2437,7 +2436,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = KeybindFunctions
+						DawLib.Options[Flag] = KeybindFunctions
 					end
 
 					return KeybindFunctions
@@ -3009,7 +3008,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = DropdownFunctions
+						DawLib.Options[Flag] = DropdownFunctions
 					end
 
 					return DropdownFunctions
@@ -3847,13 +3846,13 @@ function MacLib:Window(Settings)
 					confirm.Parent = interactions
 
 					local cancel = Instance.new("TextButton")
-					cancel.Name = "Cancel"
+					cancel.Name = "Отмена"
 					cancel.FontFace = Font.new(
 						"rbxassetid://12187365364",
 						Enum.FontWeight.Medium,
 						Enum.FontStyle.Normal
 					)
-					cancel.Text = "Cancel"
+					cancel.Text = "Отмена"
 					cancel.TextColor3 = Color3.fromRGB(255, 255, 255)
 					cancel.TextSize = 15
 					cancel.TextTransparency = 0.5
@@ -4294,7 +4293,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = ColorpickerFunctions
+						DawLib.Options[Flag] = ColorpickerFunctions
 					end
 					return ColorpickerFunctions
 				end
@@ -4348,7 +4347,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = HeaderFunctions
+						DawLib.Options[Flag] = HeaderFunctions
 					end
 					return HeaderFunctions
 				end
@@ -4392,7 +4391,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = LabelFunctions
+						DawLib.Options[Flag] = LabelFunctions
 					end
 					return LabelFunctions
 				end
@@ -4436,7 +4435,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = SubLabelFunctions
+						DawLib.Options[Flag] = SubLabelFunctions
 					end
 					return SubLabelFunctions
 				end
@@ -4512,7 +4511,7 @@ function MacLib:Window(Settings)
 					end
 
 					if Flag then
-						MacLib.Options[Flag] = ParagraphFunctions
+						DawLib.Options[Flag] = ParagraphFunctions
 					end
 					return ParagraphFunctions
 				end
@@ -4654,7 +4653,7 @@ function MacLib:Window(Settings)
 					Name = "Выбрать Конфинг",
 					Multi = false,
 					Required = false,
-					Options = MacLib:RefreshConfigList(),
+					Options = DawLib:RefreshConfigList(),
 					Callback = function(Value)
 						selectedConfig = Value
 					end,
@@ -4671,7 +4670,7 @@ function MacLib:Window(Settings)
 							return
 						end
 
-						local success, returned = MacLib:SaveConfig(inputPath)
+						local success, returned = DawLib:SaveConfig(inputPath)
 						if not success then
 							WindowFunctions:Notify({
 								Title = "Интерфейс",
@@ -4685,14 +4684,14 @@ function MacLib:Window(Settings)
 						})
 
 						configSelection:ClearOptions()
-						configSelection:InsertOptions(MacLib:RefreshConfigList())
+						configSelection:InsertOptions(DawLib:RefreshConfigList())
 					end,
 				})
 
 				configSection:Button({
 					Name = "Загрузить Конфинг",
 					Callback = function()
-						local success, returned = MacLib:LoadConfig(configSelection.Value)
+						local success, returned = DawLib:LoadConfig(configSelection.Value)
 						if not success then
 							WindowFunctions:Notify({
 								Title = "Интерфейс",
@@ -4711,7 +4710,7 @@ function MacLib:Window(Settings)
 				configSection:Button({
 					Name = "Перезаписать Конфинг,
 					Callback = function()
-						local success, returned = MacLib:SaveConfig(configSelection.Value)
+						local success, returned = DawLib:SaveConfig(configSelection.Value)
 						if not success then
 							WindowFunctions:Notify({
 								Title = "Интерфейс",
@@ -4731,7 +4730,7 @@ function MacLib:Window(Settings)
 					Name = "Перезагрузить Лист Конфингов",
 					Callback = function()
 						configSelection:ClearOptions()
-						configSelection:InsertOptions(MacLib:RefreshConfigList())
+						configSelection:InsertOptions(DawLib:RefreshConfigList())
 					end,
 				})
 
@@ -4741,7 +4740,7 @@ function MacLib:Window(Settings)
 					Name = "Поставить Авто_Загрузку",
 					Callback = function()
 						local name = configSelection.Value
-						writefile(MacLib.Folder .. "/settings/autoload.txt", name)
+						writefile(DawLib.Folder .. "/settings/autoload.txt", name)
 						autoloadLabel:UpdateName("Авто_Загрузка Конфинга: " .. name)
 						WindowFunctions:Notify({
 							Title = "Интерфейс",
@@ -4752,8 +4751,8 @@ function MacLib:Window(Settings)
 
 				autoloadLabel = configSection:Label({Text = "Авто_Загрузка Конфинга: None"})
 
-				if isfile(MacLib.Folder .. "/settings/autoload.txt") then
-					local name = readfile(MacLib.Folder .. "/settings/autoload.txt")
+				if isfile(DawLib.Folder .. "/settings/autoload.txt") then
+					local name = readfile(DawLib.Folder .. "/settings/autoload.txt")
 					autoloadLabel:UpdateName("Авто_Загрузка Конфинга: " .. name)
 				end
 			end
@@ -5264,7 +5263,7 @@ function MacLib:Window(Settings)
 		if onUnloadCallback then
 			onUnloadCallback()  
 		end
-		macLib:Destroy()
+		DawLib:Destroy()
 		unloaded = true
 	end
 
@@ -5377,8 +5376,8 @@ function MacLib:Window(Settings)
 				}
 			end,
 			Load = function(Flag, data)
-				if MacLib.Options[Flag] and data.state then
-					MacLib.Options[Flag]:UpdateState(data.state)
+				if DawLib.Options[Flag] and data.state then
+					DawLib.Options[Flag]:UpdateState(data.state)
 				end
 			end
 		},
@@ -5391,8 +5390,8 @@ function MacLib:Window(Settings)
 				}
 			end,
 			Load = function(Flag, data)
-				if MacLib.Options[Flag] and data.value then
-					MacLib.Options[Flag]:UpdateValue(data.value)
+				if DawLib.Options[Flag] and data.value then
+					DawLib.Options[Flag]:UpdateValue(data.value)
 				end
 			end
 		},
@@ -5405,8 +5404,8 @@ function MacLib:Window(Settings)
 				}
 			end,
 			Load = function(Flag, data)
-				if MacLib.Options[Flag] and data.text and type(data.text) == "string" then
-					MacLib.Options[Flag]:UpdateText(data.text)
+				if DawLib.Options[Flag] and data.text and type(data.text) == "string" then
+					DawLib.Options[Flag]:UpdateText(data.text)
 				end
 			end
 		},
@@ -5419,8 +5418,8 @@ function MacLib:Window(Settings)
 				}
 			end,
 			Load = function(Flag, data)
-				if MacLib.Options[Flag] and data.bind then
-					MacLib.Options[Flag]:Bind(Enum.KeyCode[data.bind])
+				if DawLib.Options[Flag] and data.bind then
+					DawLib.Options[Flag]:Bind(Enum.KeyCode[data.bind])
 				end
 			end
 		},
@@ -5433,8 +5432,8 @@ function MacLib:Window(Settings)
 				}
 			end,
 			Load = function(Flag, data)
-				if MacLib.Options[Flag] and data.value then
-					MacLib.Options[Flag]:UpdateSelection(data.value)
+				if DawLib.Options[Flag] and data.value then
+					DawLib.Options[Flag]:UpdateSelection(data.value)
 				end
 			end
 		},
@@ -5459,10 +5458,10 @@ function MacLib:Window(Settings)
 					return Color3.new(r, g, b)
 				end
 
-				if MacLib.Options[Flag] and data.color then
-					MacLib.Options[Flag]:SetColor(HexToColor3(data.color)) 
+				if DawLib.Options[Flag] and data.color then
+					DawLib.Options[Flag]:SetColor(HexToColor3(data.color)) 
 					if data.alpha then
-						MacLib.Options[Flag]:SetAlpha(data.alpha)
+						DawLib.Options[Flag]:SetAlpha(data.alpha)
 					end
 				end
 			end
@@ -5473,8 +5472,8 @@ function MacLib:Window(Settings)
 		if isStudio or not (isfolder and makefolder) then return "Config system unavailable." end
 
 		local paths = {
-			MacLib.Folder,
-			MacLib.Folder .. "/settings"
+			DawLib.Folder,
+			DawLib.Folder .. "/settings"
 		}
 
 		for i = 1, #paths do
@@ -5485,13 +5484,13 @@ function MacLib:Window(Settings)
 		end
 	end
 
-	function MacLib:LoadAutoLoadConfig()
+	function DawLib:LoadAutoLoadConfig()
 		if isStudio or not (isfile and readfile) then return "Config system unavailable." end
 
-		if isfile(MacLib.Folder .. "/settings/autoload.txt") then
-			local name = readfile(MacLib.Folder .. "/settings/autoload.txt")
+		if isfile(DawLib.Folder .. "/settings/autoload.txt") then
+			local name = readfile(DawLib.Folder .. "/settings/autoload.txt")
 
-			local suc, err = MacLib:LoadConfig(name)
+			local suc, err = DawLib:LoadConfig(name)
 			if not suc then
 				WindowFunctions:Notify({
 					Title = "Interface",
@@ -5506,27 +5505,27 @@ function MacLib:Window(Settings)
 		end
 	end
 
-	function MacLib:SetFolder(Folder)
+	function DawLib:SetFolder(Folder)
 		if isStudio then return "Config system unavailable." end
 
-		MacLib.Folder = Folder;
+		DawLib.Folder = Folder;
 		BuildFolderTree()
 	end
 
-	function MacLib:SaveConfig(Path)
+	function DawLib:SaveConfig(Path)
 		if isStudio or not writefile then return "Config system unavailable." end
 
 		if (not Path) then
 			return false, "Please select a config file."
 		end
 
-		local fullPath = MacLib.Folder .. "/settings/" .. Path .. ".json"
+		local fullPath = DawLib.Folder .. "/settings/" .. Path .. ".json"
 
 		local data = {
 			objects = {}
 		}
 
-		for flag, option in next, MacLib.Options do
+		for flag, option in next, DawLib.Options do
 			if not ClassParser[option.Class] then continue end
 			if option.IgnoreConfig then continue end
 
@@ -5542,14 +5541,14 @@ function MacLib:Window(Settings)
 		return true
 	end
 
-	function MacLib:LoadConfig(Path)
+	function DawLib:LoadConfig(Path)
 		if isStudio or not (isfile and readfile) then return "Config system unavailable." end
 
 		if (not Path) then
 			return false, "Please select a config file."
 		end
 
-		local file = MacLib.Folder .. "/settings/" .. Path .. ".json"
+		local file = DawLib.Folder .. "/settings/" .. Path .. ".json"
 		if not isfile(file) then return false, "Invalid file" end
 
 		local success, decoded = pcall(HttpService.JSONDecode, HttpService, readfile(file))
@@ -5566,10 +5565,10 @@ function MacLib:Window(Settings)
 		return true
 	end
 
-	function MacLib:RefreshConfigList()
+	function DawLib:RefreshConfigList()
 		if isStudio or not (isfolder and listfiles) then return "Config system unavailable." end
 
-		local list = (isfolder(MacLib.Folder) and isfolder(MacLib.Folder .. "/settings")) and listfiles(MacLib.Folder .. "/settings") or {}
+		local list = (isfolder(DawLib.Folder) and isfolder(DawLib.Folder .. "/settings")) and listfiles(DawLib.Folder .. "/settings") or {}
 
 		local out = {}
 		for i = 1, #list do
@@ -5596,7 +5595,7 @@ function MacLib:Window(Settings)
 		return out
 	end
 
-	macLib.Enabled = false
+	DawLib.Enabled = false
 
 	local assetList = {}
 	for _, assetId in pairs(assets) do
@@ -5604,14 +5603,14 @@ function MacLib:Window(Settings)
 	end
 
 	ContentProvider:PreloadAsync(assetList)
-	macLib.Enabled = true
+	DawLib.Enabled = true
 	windowState = true
 
 	return WindowFunctions
 end
 
-function MacLib:Demo()
-	local Window = MacLib:Window({
+function DawLib:Demo()
+	local Window = DawLib:Window({
 		Title = "Daw Hub",
 		Subtitle = "This is a subtitle.",
 		Size = UDim2.fromOffset(868, 650),
@@ -5862,7 +5861,7 @@ function MacLib:Demo()
 		Text = "Sub-Label. Lorem ipsum odor amet, consectetuer adipiscing elit."
 	})
 
-	MacLib:SetFolder("Maclib")
+	DawLib:SetFolder("DawLib")
 	tabs.Settings:InsertConfigSection("Left")
 
 	Window.onUnloaded(function()
@@ -5870,7 +5869,7 @@ function MacLib:Demo()
 	end)
 
 	tabs.Main:Select()
-	MacLib:LoadAutoLoadConfig()
+	DawLib:LoadAutoLoadConfig()
 end
 
-return MacLib
+return DawLib
